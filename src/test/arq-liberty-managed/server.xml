@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="new server">
+
+    <!-- Enable features -->
+    <featureManager>
+        <feature>javaee-8.0</feature>
+        <feature>usr:arquillian-support-1.0</feature>
+        <feature>localConnector-1.0</feature>
+    </featureManager>
+
+    <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+    <httpEndpoint id="defaultHttpEndpoint"
+                  httpPort="9080"
+                  httpsPort="9443"/>
+
+    <!-- Automatically expand WAR files and EAR files -->
+    <applicationManager autoExpand="true"/>
+  
+    <applicationMonitor updateTrigger="mbean"/>
+
+    <!-- Derby Library Configuration -->
+    <library id="derbyJDBCLib">
+        <fileset dir="${shared.resource.dir}" includes="derby*.jar"/>
+    </library>
+
+    <!-- Datasource Configuration -->
+    <dataSource jndiName="jdbc/JakartaEECafeDB">
+        <jdbcDriver libraryRef="derbyJDBCLib" />
+        <properties.derby.embedded databaseName="jakartaee-cafe-data" createDatabase="create"/>
+    </dataSource>
+
+</server>
