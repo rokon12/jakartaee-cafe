@@ -10,7 +10,7 @@
   <variable name="default.http.port" defaultValue="9080"/>
   <variable name="default.https.port" defaultValue="9443"/>
 
-  <webApplication location="jakarta-cafe.war" contextRoot="/"/>
+  <webApplication location="jakartaee-cafe.war" contextRoot="/"/>
   <mpMetrics authentication="false"/>
   <logging traceSpecification="com.ibm.ws.microprofile.health.*=all"/>
 
