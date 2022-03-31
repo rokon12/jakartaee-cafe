@@ -9,7 +9,7 @@
 
     <container qualifier="liberty-managed">
         <configuration>
-            <property name="wlpHome">target/wlp/</property>
+            <property name="wlpHome">target/liberty/wlp/</property>
             <property name="serverName">defaultServer</property>
             <property name="httpPort">9080</property>
             <!-- timeout in seconds -->

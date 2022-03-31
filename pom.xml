@@ -257,59 +257,52 @@
               <exclude>server.xml</exclude>
             </excludes>
           </testResource>
-          <testResource>
-            <directory>src/test/arq-liberty-managed</directory>
-            <includes>
-              <include>server.xml</include>
-            </includes>
-            <targetPath>
-              ${project.build.directory}/wlp/usr/servers/defaultServer
-            </targetPath>
-          </testResource>
         </testResources>
-
         <plugins>
+          <plugin>
+            <groupId>io.openliberty.tools</groupId>
+            <artifactId>liberty-maven-plugin</artifactId>
+            <version>${liberty-maven-plugin.version}</version>
+            <executions>
+                <execution>
+                    <id>package</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>create</goal>
+                     </goals>
+                </execution>
+                <execution>
+                    <id>pre-integration-test</id>
+                    <phase>pre-integration-test</phase>
+                    <goals>
+                         <goal>install-feature</goal>
+                     </goals>
+                </execution>
+            </executions>
+            <configuration>
+              <serverXmlFile>src/test/arq-liberty-managed/server.xml</serverXmlFile>
+              <copyDependencies>
+                <location>${project.build.directory}/liberty/wlp/usr/shared/resources</location>
+                <dependency>
+                  <groupId>org.apache.derby</groupId>
+                  <artifactId>derby</artifactId>
+                </dependency>
+              </copyDependencies>
+            </configuration>
+          </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-dependency-plugin</artifactId>
             <version>${maven-dependency-plugin.version}</version>
             <executions>
               <execution>
-                <id>copy</id>
-                <phase>process-test-resources</phase>
-                <goals>
-                  <goal>copy</goal>
-                </goals>
-                <configuration>
-                  <artifactItems>
-                    <artifactItem>
-                      <groupId>org.apache.derby</groupId>
-                      <artifactId>derby</artifactId>
-                      <version>${derby.version}</version>
-                      <type>jar</type>
-                      <overWrite>false</overWrite>
-                    </artifactItem>
-                  </artifactItems>
-                  <outputDirectory>${project.build.directory}/wlp/usr/shared/resources
-                  </outputDirectory>
-                </configuration>
-              </execution>
-              <execution>
                 <id>unpack</id>
-                <phase>pre-integration-test</phase>
+                <phase>package</phase>
                 <goals>
                   <goal>unpack</goal>
                 </goals>
                 <configuration>
                   <artifactItems>
-                    <artifactItem>
-                      <groupId>io.openliberty</groupId>
-                      <artifactId>openliberty-runtime</artifactId>
-                      <version>${liberty.runtime.version}</version>
-                      <type>zip</type>
-                      <overWrite>false</overWrite>
-                      <outputDirectory>${project.build.directory}</outputDirectory>
-                    </artifactItem>
                     <artifactItem>
                       <groupId>io.openliberty.arquillian</groupId>
                       <artifactId>arquillian-liberty-support</artifactId>
@@ -317,7 +310,7 @@
                       <type>zip</type>
                       <classifier>feature</classifier>
                       <overWrite>false</overWrite>
-                      <outputDirectory>${project.build.directory}/wlp/usr</outputDirectory>
+                      <outputDirectory>${project.build.directory}/liberty/wlp/usr</outputDirectory>
                     </artifactItem>
                   </artifactItems>
                 </configuration>
@@ -329,7 +322,7 @@
             <version>${maven-failsafe-plugin.version}</version>
             <configuration>
               <environmentVariables>
-                <WLP_HOME>${project.build.directory}/wlp</WLP_HOME>
+                  <WLP_HOME>${project.build.directory}/liberty/wlp</WLP_HOME>
               </environmentVariables>
               <systemPropertyVariables>
                 <arquillian.launch>liberty-managed</arquillian.launch>
