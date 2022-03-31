@@ -56,7 +56,7 @@ public class CafeResourceTest {
 				.addClass(CafeRepository.class)
 				.addClass(Coffee.class)
 				.addClasses(CafeResource.class, JaxrsActivator.class)
-				.addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
+				.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
 				// Enable CDI
 				.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
