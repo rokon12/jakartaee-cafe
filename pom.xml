@@ -177,6 +177,9 @@
   <profiles>
     <profile>
       <id>liberty</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <build>
         <plugins>
           <plugin>
@@ -241,7 +244,7 @@
       <build>
         <testResources>
           <testResource>
-            <directory>src/test/arq-liberty-managed</directory>
+            <directory>src/test/resources</directory>
             <includes>
               <include>*</include>
             </includes>
@@ -250,7 +253,7 @@
             </excludes>
           </testResource>
           <testResource>
-            <directory>src/test/arq-liberty-managed</directory>
+            <directory>src/test/resources</directory>
             <includes>
               <include>server.xml</include>
             </includes>
